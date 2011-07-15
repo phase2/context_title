@@ -1,0 +1,42 @@
+<?php
+/*
+ * implemntation of hook_context_plugins()
+ */
+function context_title_context_plugins() {
+  $plugins = array();
+    $plugins['context_title_reaction'] = array(
+      'handler' => array(
+      'path' => drupal_get_path('module', 'context_title') .'/plugins',
+      'file' => 'context_title_reaction.inc',
+      'class' => 'context_title_reaction',
+      'parent' => 'context_reaction',
+    ),
+  );
+  return $plugins;
+}
+
+
+/*
+ * implemntation of hook_context_registry()
+ */
+function context_title_context_registry() { 
+  $reg = array(
+    'reactions' => array(
+      'title' => array(
+        'title' => t('Title'),
+        'description' => 'Turn off the title on a node page',
+        'plugin' => 'context_title_reaction',
+      ),
+    ),
+  );
+  return $reg;
+}
+
+/*
+ * implemntation of hook_process_page()
+ */
+function context_title_preprocess_node(&$vars) {
+  if ($plugin = context_get_plugin('reaction', 'title')) {
+    $plugin->execute($vars);
+  } 
+}

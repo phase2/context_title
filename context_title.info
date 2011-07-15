@@ -1,0 +1,4 @@
+core = "7.x"
+description = "Add Context Reaction that allow one to turn off the title on node pages"
+name = "Context Title"
+package = "Context"
